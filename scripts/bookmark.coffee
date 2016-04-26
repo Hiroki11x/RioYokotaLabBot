@@ -1,7 +1,7 @@
 module.exports = (robot) ->
   links = []
 
-  robot.router.get '/hubot-homepage/', (req, res) ->
+  robot.router.get '/hubot-bookmark/', (req, res) ->
     li = links.map (i) ->
       """
         <li><a href="#{i.url}" target="_blank">#{i.text}</a></li>
@@ -21,17 +21,17 @@ module.exports = (robot) ->
     res.type 'html'
     res.send html
 
-  robot.respond /homepage li?st?/, (msg) ->
+  robot.respond /bookmark li?st?/, (msg) ->
     msg.send links.map((i, index) -> "[#{index}] #{i.text} #{i.url}").join('\n')
 
-  robot.respond /homepage add (.+) (https?:\/\/.+)/, (msg) ->
+  robot.respond /bookmark add (.+) (https?:\/\/.+)/, (msg) ->
     text = msg.match[1]
     url = msg.match[2]
     item = { text, url }
     links.push item
     msg.send "added #{item.text} #{item.url}"
 
-  robot.respond /homepage re?m(?:ove)? (\d+)/, (msg) ->
+  robot.respond /bookmark re?m(?:ove)? (\d+)/, (msg) ->
     index = msg.match[1]
     item = links.splice(index, 1)[0]
     msg.send "removed #{item.text} #{item.url}" if item?

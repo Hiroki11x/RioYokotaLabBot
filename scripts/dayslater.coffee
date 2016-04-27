@@ -1,4 +1,3 @@
-
 moment = require 'moment'
 
 module.exports = (robot) ->
